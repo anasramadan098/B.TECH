@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin | Add Blog</title>
+  <link rel="stylesheet" href="../../main.css">
+</head>
+<body class="admin">
+    <h1>Add Blog</h1>
+    <form action="/add-new-blog" method="post">
+        <input required name="blog-title" type="text" placeholder="Write The Blog Title">
+        <textarea required name="blog-code">
+        </textarea>
+        <button>Add Blog</button>
+    </form>
+  <!-- Add Rich Text -->
+  <script src="https://cdn.tiny.cloud/1/z8v62mslqg7upmx8e238jzphycdj659fshmgc3j4dwfkr5e5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Anas Ramadan',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ],
+    });
+    document.querySelector('button').addEventListener('click',function(e) {
+      e.preventDefault()
+        const password = 1234;
+        let pass = prompt('Write Your Password');
+        if (pass == password && document.querySelector('input').value != '' && document.querySelector('textarea').value != '' )  {
+            document.querySelector('form').submit()
+        } else {
+            alert('Wrong Password Or Empty Fields !');
+        }
+    })
+  </script>
+</body>
+</html>

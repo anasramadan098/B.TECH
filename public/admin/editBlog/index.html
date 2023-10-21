@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Edit Blog</title>
+    <link rel="stylesheet" href="../../main.css">
+</head>
+<body class="admin" dir="rtl">
+    <form action="/editPost" class="editedForm" method="post">
+        <input type="text" readonly name="blog-id">
+        <input type="text" name="new-blog-title" placeholder="Write New Title">
+        <textarea name="new-blog-code">
+        </textarea>
+        <a href="#" class="uptade">Uptade</a>
+        <a href="#" class="delete">Delete</a>
+        <a href="#" class="close">Close</a>
+    </form>
+    <div class="blogs"></div>
+    <script>
+
+        function checkAdmin() {
+            const password = 1234;
+            let pass = prompt('Write Your Password');
+            if (pass == password) {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        const blogsCont = document.querySelector('.blogs');
+        const form = document.querySelector('form');
+        const richText = document.querySelector('textarea');
+        document.querySelector('.uptade').addEventListener('click',function () {
+            if (checkAdmin()) {
+                form.action = this.textContent.toLowerCase();
+                form.submit();
+            }
+        })
+        document.querySelector('.delete').addEventListener('click',function () {
+            if (checkAdmin()) {
+                form.action = this.textContent.toLowerCase();
+                form.submit();
+            }
+        })
+        document.querySelector('.close').addEventListener('click',function () {
+            form.style.display = 'none';
+        })
+
+        fetch('../../blogs.json').then(res=> res.json()).then(d=> {
+
+            if (d.length != 0) {
+                d.map(blog => {
+                    const div = document.createElement('div');
+                    div.className = 'blog';
+                    const h2 = document.createElement('h2');
+                    h2.innerHTML = blog['blog-title'];
+                    div.appendChild(h2);
+    
+                    div.addEventListener('click',function() {
+                        form.style.display = 'flex';
+                        document.querySelector('input[name="new-blog-title"]').value = blog['blog-title'];
+                        document.querySelector('input[name="blog-id"]').value = blog['blog-id'];
+                        richText.value = blog['blog-code'];
+                    })
+    
+                    blogsCont.appendChild(div)
+                })
+            } else {
+                const  p = document.createElement('p');
+                p.style.cssText = 'color:#fff;font-size:3em;';
+                p.innerHTML = " لا توجد منشورات بعد";
+                document.querySelector('.blogs').appendChild(p);
+            }
+        })
+    </script>
+    <!-- Add Rich Texty -->
+    <script src="https://cdn.tiny.cloud/1/z8v62mslqg7upmx8e238jzphycdj659fshmgc3j4dwfkr5e5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Anas Ramadan',
+          mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+          ],
+        });
+      </script>
+</body>
+</html>
