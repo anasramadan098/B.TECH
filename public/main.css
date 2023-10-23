@@ -611,3 +611,9 @@ footer .d-flex {
     width: 100%;
   }
 }
+section {
+  transition: .3s;
+}
+section:hover {
+  opacity: .9;
+}
