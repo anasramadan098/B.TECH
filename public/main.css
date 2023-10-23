@@ -89,7 +89,7 @@ section.about p{
   margin-top: 30px;
 }
 section.mission {
-  background-color: var(--second-color);
+  background-color: #cb7400;
 }
 section.mission p{
   color: var(--main-color);
